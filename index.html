@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>SVG Overlay Game – Advent + Christmas</title>
+<style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #f9f9f9;
+      font-family: sans-serif;
+      overflow: auto;
+    }
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .svg-background {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+    }
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .drop-zone {
+      fill: rgba(0, 0, 0, 0.05);
+      stroke: #10b981;
+      stroke-width: 2;
+      pointer-events: all;
+    }
+    .draggable {
+      margin: 10px;
+      padding: 8px 16px;
+      background: #fef3c7;
+      border: 2px solid #fbbf24;
+      font-weight: bold;
+      cursor: grab;
+      user-select: none;
+      display: inline-block;
+    }
+    #red-x {
+      display: none;
+      font-size: 5rem;
+      color: red;
+      position: absolute;
+      top: 40%;
+      left: 45%;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+<h2>Liturgical Year Game Phase 1: The Liturgical Seasons</h2><p>Click and drag the abbreviation for each season to the circle in the middle of the colored band in the ellipse representing that season.</p><ul><li>ADV = Advent</li><li>CHR = Christmas</li><li>EAS = Easter</li><li>LEN = Lent</li><li>OTE = Ordinary Time (Sundays after Epiphany)</li><li>OTP = Ordinary Time (Sundays after Pentecost)</li></ul>
+<div class="wrapper">
+<div>
+<div class="draggable" draggable="true" id="label-Advent">Advent</div>
+<div class="draggable" draggable="true" id="label-Christmas">Christmas</div>
+<div class="draggable" draggable="true" id="label-OTE">OTE</div>
+<div class="draggable" draggable="true" id="label-LEN">LEN</div>
+<div class="draggable" draggable="true" id="label-EAS">EAS</div>
+<div class="draggable" draggable="true" id="label-OTP">OTP</div>
+</div>
+<div class="svg-background" id="svg-container">
+<!-- SVG background from Illustrator -->
+<object data="calendar.svg" type="image/svg+xml" width="100%"></object>
+<!-- Overlay drop zones -->
+<svg class="overlay" preserveaspectratio="xMidYMid meet" viewbox="0 0 2400 1633">
+<circle class="drop-zone" cx="1580" cy="650" id="zone-Advent" r="50"></circle>
+<circle class="drop-zone" cx="1715" cy="850" id="zone-Christmas" r="50"></circle>
+<circle class="drop-zone" cx="1515" cy="1070" id="zone-OTE" r="50"></circle>
+<circle class="drop-zone" cx="1140" cy="1140" id="zone-LEN" r="50"></circle>
+<circle class="drop-zone" cx="710" cy="970" id="zone-EAS" r="50"></circle>
+<circle class="drop-zone" cx="1050" cy="560" id="zone-OTP" r="50"></circle>
+<circle class="drop-zone" cx="1050" cy="560" id="zone-OTP" r="50"></circle>
+</svg>
+</div>
+</div>
+<div id="red-x">✖</div>
+<audio id="ding" preload="auto" src="ding.mp3"></audio>
+<audio id="buzzer" preload="auto" src="buzzer.mp3"></audio>
+<script>
+    const labels = document.querySelectorAll(".draggable");
+    const dropZones = {
+      "label-Advent": document.getElementById("zone-Advent"),
+      "label-Christmas": document.getElementById("zone-Christmas"),
+      "label-OTE": document.getElementById("zone-OTE"),
+      "label-LEN": document.getElementById("zone-LEN"),
+      "label-EAS": document.getElementById("zone-EAS"),
+      "label-OTP": document.getElementById("zone-OTP"),
+      "label-OTP": document.getElementById("zone-OTP")
+    };
+    const redX = document.getElementById("red-x");
+    const ding = document.getElementById("ding");
+    const buzzer = document.getElementById("buzzer");
+    let currentDrag = null;
+
+    labels.forEach(label => {
+      label.addEventListener("dragstart", e => {
+        currentDrag = e.target;
+        e.dataTransfer.setDragImage(new Image(), 0, 0);  // hide default ghost image
+      });
+    });
+
+    document.querySelector(".overlay").addEventListener("dragover", e => e.preventDefault());
+
+    document.querySelector(".overlay").addEventListener("drop", e => {
+      e.preventDefault();
+      const svg = document.querySelector(".overlay");
+      const pt = svg.createSVGPoint();
+      pt.x = e.clientX;
+      pt.y = e.clientY;
+      const dropPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
+
+      const draggedId = currentDrag.id;
+      const zone = dropZones[draggedId];
+      const cx = parseFloat(zone.getAttribute("cx"));
+      const cy = parseFloat(zone.getAttribute("cy"));
+      const r = parseFloat(zone.getAttribute("r"));
+
+      const dx = dropPoint.x - cx;
+      const dy = dropPoint.y - cy;
+      const inside = dx * dx + dy * dy <= r * r;
+
+      if (inside) {
+        ding.play();
+        
+    const zoneBox = zone.getBoundingClientRect();
+    const container = document.getElementById('svg-container');
+    const containerBox = container.getBoundingClientRect();
+
+    container.appendChild(currentDrag);
+    currentDrag.style.position = 'absolute';
+    currentDrag.style.left = (zoneBox.left - containerBox.left + zoneBox.width / 2 - currentDrag.offsetWidth / 2) + 'px';
+    currentDrag.style.top = (zoneBox.top - containerBox.top + zoneBox.height / 2 - currentDrag.offsetHeight / 2) + 'px';
+    currentDrag.style.zIndex = 20;
+    currentDrag.setAttribute('draggable', 'false');
+    
+        zone.classList.add("matched");
+      } else {
+        buzzer.play();
+        showRedX();
+      }
+
+      currentDrag = null;
+    });
+
+    function showRedX() {
+      redX.style.display = "block";
+      setTimeout(() => redX.style.display = "none", 1200);
+    }
+  </script>
+</body>
+</html>
