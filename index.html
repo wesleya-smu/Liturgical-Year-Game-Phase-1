@@ -66,9 +66,10 @@
 </style>
 </head>
 <body>
+
 <div class="wrapper"><h2 style="text-align: center; margin-bottom: 0.5rem;">Liturgical Year Game: Seasons</h2><p style="text-align: center; max-width: 800px; margin: 0 auto 1rem auto;">This game tests your knowledge of the sequence of the liturgical seasons during the church year. Drag the abbreviations for the following seasons to the proper colored band in the ellipse. Make sure to drag the abbreviation to the circle in the band. The abbreviations for the seasons are: Advent (ADV), Christmas (CHR), Easter (EAS), Lent (LEN), Ordinary Time - Sundays after Epiphany (OTE), and Ordinary Time - Sundays after Pentecost (OTP).</p>
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 0px;">
-<div class="draggable" id="label-Advent">ADV</div><div class="draggable" id="label-Christmas">CHR</div><div class="draggable" id="label-EAS">EAS</div><div class="draggable" id="label-LEN">LEN</div><div class="draggable" id="label-OTE">OTE</div><div class="draggable" id="label-OTP">OTP</div></div>
+<div class="draggable" draggable="true" id="label-Advent">ADV</div><div class="draggable" draggable="true" id="label-Christmas">CHR</div><div class="draggable" draggable="true" id="label-EAS">EAS</div><div class="draggable" draggable="true" id="label-LEN">LEN</div><div class="draggable" draggable="true" id="label-OTE">OTE</div><div class="draggable" draggable="true" id="label-OTP">OTP</div></div>
 <div class="svg-background" id="svg-container" style="margin: 0; padding: 0; display: block;">
 <!-- SVG background from Illustrator -->
 <object data="calendar.svg" type="image/svg+xml" width="100%"></object>
@@ -156,62 +157,5 @@
       setTimeout(() => redX.style.display = "none", 1200);
     }
   </script>
-<script>
-interact('.draggable').draggable({
-  inertia: true,
-  modifiers: [
-    interact.modifiers.restrictRect({
-      restriction: 'parent',
-      endOnly: true
-    })
-  ],
-  autoScroll: true,
-  listeners: {
-    move (event) {
-      const target = event.target;
-      const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-      const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-      target.style.transform = `translate(${x}px, ${y}px)`;
-      target.setAttribute('data-x', x);
-      target.setAttribute('data-y', y);
-    },
-    end (event) {
-      const draggable = event.target;
-      const dropZones = {
-        "label-ADV": document.getElementById("zone-Advent"),
-        "label-CHR": document.getElementById("zone-Christmas"),
-        "label-EAS": document.getElementById("zone-EAS"),
-        "label-LEN": document.getElementById("zone-LEN"),
-        "label-OTE": document.getElementById("zone-OTE"),
-        "label-OTP": document.getElementById("zone-OTP")
-      };
-
-      const dropZone = dropZones[draggable.id];
-      const dzRect = dropZone.getBoundingClientRect();
-      const draggableRect = draggable.getBoundingClientRect();
-      const dzCenterX = dzRect.left + dzRect.width / 2;
-      const dzCenterY = dzRect.top + dzRect.height / 2;
-      const draggableCenterX = draggableRect.left + draggableRect.width / 2;
-      const draggableCenterY = draggableRect.top + draggableRect.height / 2;
-      const distance = Math.sqrt(Math.pow(dzCenterX - draggableCenterX, 2) + Math.pow(dzCenterY - draggableCenterY, 2));
-
-      if (distance < dzRect.width / 2) {
-        // Correct placement
-        const offsetX = dzCenterX - draggableRect.width / 2;
-        const offsetY = dzCenterY - draggableRect.height / 2;
-        const svgRect = document.querySelector('.svg-background').getBoundingClientRect();
-        const x = offsetX - draggableRect.left;
-        const y = offsetY - draggableRect.top;
-        draggable.style.transform = `translate(${x}px, ${y}px)`;
-        draggable.setAttribute('data-x', x);
-        draggable.setAttribute('data-y', y);
-        new Audio('ding.mp3').play();
-      } else {
-        // Incorrect
-        new Audio('buzzer.mp3').play();
-      }
-    }
-  }
-});
-</script></body>
+</body>
 </html>
