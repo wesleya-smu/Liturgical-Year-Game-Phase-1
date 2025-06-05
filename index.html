@@ -54,12 +54,21 @@
       left: 45%;
       z-index: 10;
     }
-  </style>
+  
+    .label-row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+</style>
 </head>
 <body>
 <h2>Liturgical Year Game Phase 1: The Liturgical Seasons</h2><p>Click and drag the abbreviation for each season to the circle in the middle of the colored band in the ellipse representing that season.</p><ul><li>ADV = Advent</li><li>CHR = Christmas</li><li>EAS = Easter</li><li>LEN = Lent</li><li>OTE = Ordinary Time (Sundays after Epiphany)</li><li>OTP = Ordinary Time (Sundays after Pentecost)</li></ul>
 <div class="wrapper">
-<div class="draggable" draggable="true" id="label-OTP" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 1rem;">OTP</div><div class="draggable" draggable="true" id="label-OTE">OTE</div><div class="draggable" draggable="true" id="label-LEN">LEN</div><div class="draggable" draggable="true" id="label-EAS">EAS</div><div class="draggable" draggable="true" id="label-Christmas">Christmas</div><div class="draggable" draggable="true" id="label-Advent">Advent</div><div>
+<div class="label-row" draggable="true" id="label-OTP" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 1rem;">OTP</div><div class="draggable" draggable="true" id="label-OTE">OTE</div><div class="draggable" draggable="true" id="label-LEN">LEN</div><div class="draggable" draggable="true" id="label-EAS">EAS</div><div class="draggable" draggable="true" id="label-Christmas">Christmas</div><div class="draggable" draggable="true" id="label-Advent">Advent</div><div>
 </div>
 <div class="svg-background" id="svg-container">
 <!-- SVG background from Illustrator -->
