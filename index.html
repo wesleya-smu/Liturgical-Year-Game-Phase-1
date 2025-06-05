@@ -55,38 +55,22 @@
       z-index: 10;
     }
   
-    .label-row {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 1rem;
-    }
-
-  .label-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin: 1rem 0;
-  }
-
-  .wrapper > div:first-of-type {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 1rem;
+  .svg-background object {
+    display: block;
+    margin: 0 auto;
+    padding: 0;
+    border: none;
+    max-width: 100%;
+    height: auto;
   }
 </style>
 </head>
 <body>
-<h2>Liturgical Year Game Phase 1: The Liturgical Seasons</h2><p>Click and drag the abbreviation for each season to the circle in the middle of the colored band in the ellipse representing that season.</p><div class="label-row"><div class="draggable" draggable="true" id="label-Advent">Advent</div><div class="draggable" draggable="true" id="label-Christmas">Christmas</div><div class="draggable" draggable="true" id="label-EAS">EAS</div><div class="draggable" draggable="true" id="label-LEN">LEN</div><div class="draggable" draggable="true" id="label-OTE">OTE</div></div><ul><li>ADV = Advent</li><li>CHR = Christmas</li><li>EAS = Easter</li><li>LEN = Lent</li><li>OTE = Ordinary Time (Sundays after Epiphany)</li><li>OTP = Ordinary Time (Sundays after Pentecost)</li></ul>
-<div class="wrapper">
-<div class="label-row" draggable="true" id="label-OTP" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 1rem;">OTP<div class="draggable" draggable="true" id="label-OTP">OTP</div><div class="draggable" draggable="true" id="label-OTP">OTP</div></div><div>
-</div>
-<div class="svg-background" id="svg-container">
+<h2>Liturgical Calendar Drag-and-Drop Game (SVG Background)</h2>
+<div class="wrapper"><h2 style="text-align: center; margin-bottom: 0.5rem;">Liturgical Year Game: Seasons</h2><p style="text-align: center; max-width: 800px; margin: 0 auto 1rem auto;">This game tests your knowledge of the sequence of the liturgical seasons during the church year. Drag the abbreviations for the following seasons to the proper colored band in the ellipse. Make sure to drag the abbreviation to the circle in the band. The abbreviations for the seasons are: Advent (ADV), Christmas (CHR), Easter (EAS), Lent (LEN), Ordinary Time - Sundays after Epiphany (OTE), and Ordinary Time - Sundays after Pentecost (OTP).</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 0px;">
+<div class="draggable" draggable="true" id="label-Advent">ADV</div><div class="draggable" draggable="true" id="label-Christmas">CHR</div><div class="draggable" draggable="true" id="label-EAS">EAS</div><div class="draggable" draggable="true" id="label-LEN">LEN</div><div class="draggable" draggable="true" id="label-OTE">OTE</div><div class="draggable" draggable="true" id="label-OTP">OTP</div></div>
+<div class="svg-background" id="svg-container" style="margin: 0; padding: 0; display: block;">
 <!-- SVG background from Illustrator -->
 <object data="calendar.svg" type="image/svg+xml" width="100%"></object>
 <!-- Overlay drop zones -->
@@ -97,8 +81,7 @@
 <circle class="drop-zone" cx="1140" cy="1140" id="zone-LEN" r="50"></circle>
 <circle class="drop-zone" cx="710" cy="970" id="zone-EAS" r="50"></circle>
 <circle class="drop-zone" cx="1050" cy="560" id="zone-OTP" r="50"></circle>
-<circle class="drop-zone" cx="1050" cy="560" id="zone-OTP" r="50"></circle>
-<circle class="drop-zone" cx="1050" cy="560" id="zone-OTP" r="50"></circle></svg>
+</svg>
 </div>
 </div>
 <div id="red-x">✖</div>
@@ -112,8 +95,6 @@
       "label-OTE": document.getElementById("zone-OTE"),
       "label-LEN": document.getElementById("zone-LEN"),
       "label-EAS": document.getElementById("zone-EAS"),
-      "label-OTP": document.getElementById("zone-OTP"),
-      "label-OTP": document.getElementById("zone-OTP"),
       "label-OTP": document.getElementById("zone-OTP")
     };
     const redX = document.getElementById("red-x");
