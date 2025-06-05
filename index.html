@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<title>SVG Overlay Game – Advent + Christmas</title>
-<style>
+  <meta charset="UTF-8">
+  <title>SVG Overlay Game – Advent + Christmas</title>
+  <style>
     html, body {
       margin: 0;
       padding: 0;
@@ -54,57 +55,42 @@
       left: 45%;
       z-index: 10;
     }
-  
-    .label-row {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 1rem;
-    }
-
-  .label-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin: 1rem 0;
-  }
-
-  .wrapper > div:first-of-type {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 1rem;
-  }
-</style>
+  </style>
 </head>
 <body>
-<h2>Liturgical Year Game Phase 1: The Liturgical Seasons</h2><p>Click and drag the abbreviation for each season to the circle in the middle of the colored band in the ellipse representing that season.</p><div class="label-row"><div class="draggable" draggable="true" id="label-Advent">Advent</div><div class="draggable" draggable="true" id="label-Christmas">Christmas</div><div class="draggable" draggable="true" id="label-EAS">EAS</div><div class="draggable" draggable="true" id="label-LEN">LEN</div><div class="draggable" draggable="true" id="label-OTE">OTE</div></div><ul><li>ADV = Advent</li><li>CHR = Christmas</li><li>EAS = Easter</li><li>LEN = Lent</li><li>OTE = Ordinary Time (Sundays after Epiphany)</li><li>OTP = Ordinary Time (Sundays after Pentecost)</li></ul>
-<div class="wrapper">
-<div class="label-row" draggable="true" id="label-OTP" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 1rem;">OTP<div class="draggable" draggable="true" id="label-OTP">OTP</div></div><div>
-</div>
-<div class="svg-background" id="svg-container">
-<!-- SVG background from Illustrator -->
-<object data="calendar.svg" type="image/svg+xml" width="100%"></object>
-<!-- Overlay drop zones -->
-<svg class="overlay" preserveaspectratio="xMidYMid meet" viewbox="0 0 2400 1633">
-<circle class="drop-zone" cx="1580" cy="650" id="zone-Advent" r="50"></circle>
-<circle class="drop-zone" cx="1715" cy="850" id="zone-Christmas" r="50"></circle>
-<circle class="drop-zone" cx="1515" cy="1070" id="zone-OTE" r="50"></circle>
-<circle class="drop-zone" cx="1140" cy="1140" id="zone-LEN" r="50"></circle>
-<circle class="drop-zone" cx="710" cy="970" id="zone-EAS" r="50"></circle>
-<circle class="drop-zone" cx="1050" cy="560" id="zone-OTP" r="50"></circle>
-<circle class="drop-zone" cx="1050" cy="560" id="zone-OTP" r="50"></circle>
+  <h2>Liturgical Calendar Drag-and-Drop Game (SVG Background)</h2>
+  <div class="wrapper">
+    <div>
+      <div class="draggable" draggable="true" id="label-Advent">Advent</div>
+      <div class="draggable" draggable="true" id="label-Christmas">Christmas</div>
+    <div class="draggable" draggable="true" id="label-OTE">OTE</div>
+    <div class="draggable" draggable="true" id="label-LEN">LEN</div>
+    <div class="draggable" draggable="true" id="label-EAS">EAS</div>
+    <div class="draggable" draggable="true" id="label-OTP">OTP</div>
+    </div>
+
+    <div class="svg-background" id="svg-container">
+      <!-- SVG background from Illustrator -->
+      <object type="image/svg+xml" data="calendar.svg" width="100%"></object>
+
+      <!-- Overlay drop zones -->
+      <svg class="overlay" viewBox="0 0 2400 1633" preserveAspectRatio="xMidYMid meet">
+        <circle id="zone-Advent" class="drop-zone" cx="1580" cy="650" r="50" />
+        <circle id="zone-Christmas" class="drop-zone" cx="1715" cy="850" r="50" />
+        <circle id="zone-OTE" class="drop-zone" cx="1515" cy="1070" r="50" />
+  <circle id="zone-LEN" class="drop-zone" cx="1140" cy="1140" r="50" />
+  <circle id="zone-EAS" class="drop-zone" cx="710" cy="970" r="50" />
+  <circle id="zone-OTP" class="drop-zone" cx="1050" cy="560" r="50" />
 </svg>
-</div>
-</div>
-<div id="red-x">✖</div>
-<audio id="ding" preload="auto" src="ding.mp3"></audio>
-<audio id="buzzer" preload="auto" src="buzzer.mp3"></audio>
-<script>
+    </div>
+  </div>
+
+  <div id="red-x">✖</div>
+
+  <audio id="ding" src="ding.mp3" preload="auto"></audio>
+  <audio id="buzzer" src="buzzer.mp3" preload="auto"></audio>
+
+  <script>
     const labels = document.querySelectorAll(".draggable");
     const dropZones = {
       "label-Advent": document.getElementById("zone-Advent"),
@@ -112,7 +98,6 @@
       "label-OTE": document.getElementById("zone-OTE"),
       "label-LEN": document.getElementById("zone-LEN"),
       "label-EAS": document.getElementById("zone-EAS"),
-      "label-OTP": document.getElementById("zone-OTP"),
       "label-OTP": document.getElementById("zone-OTP")
     };
     const redX = document.getElementById("red-x");
